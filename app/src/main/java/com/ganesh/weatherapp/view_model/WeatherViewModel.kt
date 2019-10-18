@@ -15,12 +15,12 @@ open class WeatherViewModel @Inject constructor(var galRepository: APIRepoInterf
     BaseViewModel() {
 
 
-    val weatherResponse = MutableLiveData<CityWeatherModel>()
+    val weatherResponseLiveData = MutableLiveData<CityWeatherModel>()
 
 
     fun getWeather(cityName: String) {
 
-        showLoading.value = true
+        showLoadingLiveData.value = true
 
         launch {
 
@@ -28,23 +28,23 @@ open class WeatherViewModel @Inject constructor(var galRepository: APIRepoInterf
                 galRepository.searchWeather(cityName)
             }
 
-            showLoading.value = false
+            showLoadingLiveData.value = false
 
-            hadleResult(result)
+            resultHandler(result)
 
 
         }
     }
 
 
-    fun hadleResult(result: UseCaseResult<CityWeatherModel>) {
+    fun resultHandler(result: UseCaseResult<CityWeatherModel>) {
 
         when (result) {
             is UseCaseResult.Success -> {
-                weatherResponse.value = result.data
+                weatherResponseLiveData.value = result.data
             }
             is UseCaseResult.Error -> {
-                errorResponse.value = result.exception.message
+                errorResponseLiveData.value = result.exception.message
             }
         }
     }

@@ -8,4 +8,46 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="label_style" parent="AppTheme">
+
+        <item name="android:text">@string/input</item>
+        <item name="android:textColor">@color/lightcolorGray</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="img_style" parent="AppTheme">
+        <item name="android:src">@drawable/microphone_icon</item>
+        <item name="android:layout_marginTop">@dimen/margin</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="error_txt_style" parent="AppTheme">
+        <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">@dimen/margin</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="normal_txt_style" parent="AppTheme">
+        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textStyle">bold</item>
+
+        <item name="android:layout_margin">@dimen/margin</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <style name="rlt_style" parent="AppTheme">
+        <item name="android:layout_margin">@dimen/margin</item>
+    </style>
+
 </resources>

@@ -1,10 +1,13 @@
 package com.ganesh.weatherapp.view
 
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 
 
 abstract class BaseActivity : FragmentActivity() {
@@ -31,9 +34,40 @@ abstract class BaseActivity : FragmentActivity() {
     }
 
 
+    @Suppress("DEPRECATION")
     fun isNetworkConnected(): Boolean {
-        val cm = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.activeNetworkInfo != null && cm.activeNetworkInfo.isConnected
+        var result = false
+
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            cm?.run {
+                cm.getNetworkCapabilities(cm.activeNetwork)?.run {
+                    result = when {
+                        hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                        hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                        hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                        else -> false
+                    }
+                }
+            }
+
+        } else {
+
+            cm?.run {
+                cm.activeNetworkInfo?.run {
+                    if (type == ConnectivityManager.TYPE_WIFI) {
+                        result = true
+                    } else if (type == ConnectivityManager.TYPE_MOBILE) {
+                        result = true
+                    }
+                }
+            }
+
+        }
+
+        return result
     }
 
 

@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">FindWeather</string>
+    <string name="input">Input City name to Get Weather!</string>
+
+    <string name="mobile_not_suppoer">Mobile does not supporting</string>
+
+    <string name="lat">Latitude : %s</string>
+    <string name="lng">Longitude : %s</string>
+    <string name="temp">Temperature : %.2f</string>
+    <string name="temp_min">Temp Min : %.2f</string>
+    <string name="temp_max">Temp Max : %.2f</string>
+    <string name="description">Description : %s</string>
+
+    <string name="internet_connection">No Internet Connection</string>
 </resources>

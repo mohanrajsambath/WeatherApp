@@ -4,8 +4,7 @@ import android.app.Application
 import com.ganesh.di.component.AppComponent
 import com.ganesh.di.component.DaggerAppComponent
 
-class CurrencyApplication : Application() {
-
+class WeatherApplication : Application() {
 
     fun initComponet(): AppComponent {
         return DaggerAppComponent.create()
