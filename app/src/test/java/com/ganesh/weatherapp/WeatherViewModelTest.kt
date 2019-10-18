@@ -50,11 +50,11 @@ class WeatherViewModelTest : BaseTest() {
 
         val user: UseCaseResult<CityWeatherModel> = UseCaseResult.Success(responseData)
 
-        spyViewModel.hadleResult(user)
+        spyViewModel.resultHandler(user)
 
-        assertNotNull(spyViewModel.weatherResponse.value)
+        assertNotNull(spyViewModel.weatherResponseLiveData.value)
 
-        assertNull(spyViewModel.errorResponse.value)
+        assertNull(spyViewModel.errorResponseLiveData.value)
 
     }
 
@@ -67,11 +67,11 @@ class WeatherViewModelTest : BaseTest() {
 
         val user: UseCaseResult<CityWeatherModel> = UseCaseResult.Error(Throwable(errorMessage))
 
-        spyViewModel.hadleResult(user)
+        spyViewModel.resultHandler(user)
 
-        assertNull(spyViewModel.weatherResponse.value)
+        assertNull(spyViewModel.weatherResponseLiveData.value)
 
-        assertNotNull(spyViewModel.errorResponse.value)
+        assertNotNull(spyViewModel.errorResponseLiveData.value)
 
 
     }
