@@ -10,8 +10,8 @@ import kotlin.coroutines.CoroutineContext
 
 open class BaseViewModel : ViewModel(), CoroutineScope {
 
-    val errorResponseLiveData = MutableLiveData<String>()
-    val showLoadingLiveData = MutableLiveData<Boolean>()
+    var errorResponseLiveData = MutableLiveData<String>()
+    var showLoadingLiveData = MutableLiveData<Boolean>()
 
     private val job = Job()
     override val coroutineContext: CoroutineContext = job + Dispatchers.Main

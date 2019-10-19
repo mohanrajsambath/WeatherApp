@@ -19,6 +19,7 @@ import com.ganesh.weatherapp.binding.WeatherButtonCallback
 import com.ganesh.weatherapp.binding.WeatherData
 import com.ganesh.weatherapp.view_model.WeatherViewModel
 import com.tamil.galassignment.data.model.CityWeatherModel
+import org.jetbrains.annotations.TestOnly
 import javax.inject.Inject
 
 class WeatherActivity : BaseActivity(), WeatherButtonCallback {
@@ -201,5 +202,9 @@ class WeatherActivity : BaseActivity(), WeatherButtonCallback {
 
     }
 
+    @TestOnly
+    fun assg(viewModel:WeatherViewModel){
+        this.viewModel=viewModel
+    }
 
 }

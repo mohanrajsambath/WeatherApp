@@ -1,4 +1,4 @@
-package com.ganesh.weatherapp
+package com.ganesh.weatherapp.util
 
 import com.tamil.galassignment.data.model.CityWeatherModel
 
@@ -16,7 +16,7 @@ class TestData {
         CityWeatherModel.Wind("", ""),
         CityWeatherModel.Clouds(""),
         "",
-        CityWeatherModel.Sys("", 0, "", "", "", ""),
+        CityWeatherModel.Sys("", 0, "", "DE", "", ""),
         "",
         1,
         "",

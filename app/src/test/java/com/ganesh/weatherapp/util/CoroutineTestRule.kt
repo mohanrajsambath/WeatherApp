@@ -1,4 +1,4 @@
-package com.ganesh.weatherapp
+package com.ganesh.weatherapp.util
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

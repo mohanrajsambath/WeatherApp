@@ -1,6 +1,7 @@
-package com.ganesh.weatherapp
+package com.ganesh.weatherapp.repo
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.ganesh.weatherapp.util.CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 

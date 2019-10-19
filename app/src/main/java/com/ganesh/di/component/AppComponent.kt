@@ -4,6 +4,7 @@ import com.ganesh.di.module.NetworkDIModule
 import com.ganesh.di.module.WeatherViewModelModule
 import com.ganesh.weatherapp.view.WeatherActivity
 import dagger.Component
+import org.jetbrains.annotations.TestOnly
 import javax.inject.Singleton
 
 @Singleton

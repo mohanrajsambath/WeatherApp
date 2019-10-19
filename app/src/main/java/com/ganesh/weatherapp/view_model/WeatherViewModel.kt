@@ -5,17 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import com.ganesh.data.model.UseCaseResult
 import com.tamil.galassignment.data.model.CityWeatherModel
 import com.tamil.galassignment.data.repo.APIRepoInterface
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-open class WeatherViewModel @Inject constructor(var galRepository: APIRepoInterface) :
+
+open class WeatherViewModel @Inject constructor(var apiRepositoy: APIRepoInterface) :
     BaseViewModel() {
 
 
-    val weatherResponseLiveData = MutableLiveData<CityWeatherModel>()
+    var weatherResponseLiveData = MutableLiveData<CityWeatherModel>()
+
+
 
 
     fun getWeather(cityName: String) {
@@ -25,7 +27,7 @@ open class WeatherViewModel @Inject constructor(var galRepository: APIRepoInterf
         launch {
 
             val result = withContext(Dispatchers.IO) {
-                galRepository.searchWeather(cityName)
+                apiRepositoy.searchWeather(cityName)
             }
 
             showLoadingLiveData.value = false
