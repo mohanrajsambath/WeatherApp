@@ -2,56 +2,64 @@ package com.ganesh.weatherapp.view_model
 
 
 import androidx.lifecycle.MutableLiveData
-import com.ganesh.data.model.UseCaseResult
-import com.tamil.galassignment.data.model.CityWeatherModel
-import com.tamil.galassignment.data.repo.APIRepoInterface
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.ganesh.weatherapp.data.model.ErrorMessage
+import com.ganesh.weatherapp.BuildConfig
+import com.ganesh.weatherapp.binding.WeatherData
+import com.ganesh.weatherapp.data.model.CityWeatherModel
+import com.ganesh.weatherapp.data.repo.AppApiHelper
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-open class WeatherViewModel @Inject constructor(var apiRepositoy: APIRepoInterface) :
+open class WeatherViewModel @Inject constructor() :
     BaseViewModel() {
 
+
+    @Inject
+    lateinit var apiRepositoy: AppApiHelper
 
     var weatherResponseLiveData = MutableLiveData<CityWeatherModel>()
 
 
-
-
     fun getWeather(cityName: String) {
-
         showLoadingLiveData.value = true
-
-        launch {
-
-            val result = withContext(Dispatchers.IO) {
-                apiRepositoy.searchWeather(cityName)
-            }
-
-            showLoadingLiveData.value = false
-
-            resultHandler(result)
-
-
-        }
+        getWeatherFromServer(cityName)
     }
 
+    private fun getWeatherFromServer(cityName: String) {
 
-    fun resultHandler(result: UseCaseResult<CityWeatherModel>) {
 
-        when (result) {
-            is UseCaseResult.Success -> {
-                weatherResponseLiveData.value = result.data
-            }
-            is UseCaseResult.Error -> {
-                errorResponseLiveData.value = result.exception.message
-            }
-        }
+        disposable.add(
+            apiRepositoy.searchWeather(cityName, BuildConfig.API_KEY)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<CityWeatherModel>() {
+
+                    override fun onSuccess(value: CityWeatherModel?) {
+                        successMessage(value)
+                    }
+
+                    override fun onError(e: Throwable?) {
+                        onErrorMessage(e)
+                    }
+                })
+        )
+
+
     }
 
+    fun successMessage(value: CityWeatherModel?) {
+        weatherResponseLiveData.value = value
+        showLoadingLiveData.value = false
+    }
 
+    fun onErrorMessage(e: Throwable?) {
+        val modifiedMessage = ErrorMessage.getMessage(e!!.message!!)
+        errorResponseLiveData.value = modifiedMessage
+        showLoadingLiveData.value = false
+    }
 
 
 }

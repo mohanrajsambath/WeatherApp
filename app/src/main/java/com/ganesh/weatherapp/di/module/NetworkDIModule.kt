@@ -1,12 +1,10 @@
-package com.ganesh.di.module
+package com.ganesh.weatherapp.di.module
 
 
-import com.ganesh.data.repo.APIRepository
 import com.ganesh.weatherapp.BuildConfig
-import com.tamil.galassignment.data.remote.APIInterface
+import com.ganesh.weatherapp.data.remote.APIInterface
 import com.google.gson.GsonBuilder
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.tamil.galassignment.data.repo.APIRepoInterface
+
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -21,7 +19,7 @@ import javax.inject.Singleton
 @Module
 class NetworkDIModule {
 
-
+    lateinit var inter : APIInterface
     @Provides
     @Singleton
     fun createHttpClient(): OkHttpClient {
@@ -45,25 +43,23 @@ class NetworkDIModule {
     @Singleton
     fun provideRetrofit(httpClient: OkHttpClient): APIInterface {
 
-        return Retrofit.Builder()
+        inter =  Retrofit.Builder()
             .baseUrl(BuildConfig.API_URL)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            //.addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(httpClient)
             .build().create(APIInterface::class.java)
 
+        return inter
+
     }
 
-    @Singleton
-    @Provides
-    fun proviceRepo(interfce:APIInterface): APIRepoInterface {
-        return APIRepository(interfce)
-    }
-
-
-
-
+//    @Singleton
+//    @Provides
+//    fun provideApiHelper(): AppApiHelper {
+//        return AppApiHelper()
+//    }
 
 
 

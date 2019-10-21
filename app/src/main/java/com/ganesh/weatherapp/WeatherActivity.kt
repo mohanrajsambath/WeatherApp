@@ -1,4 +1,4 @@
-package com.ganesh.weatherapp.view
+package com.ganesh.weatherapp
 
 
 import android.content.ActivityNotFoundException
@@ -9,18 +9,17 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.ganesh.data.model.ErrorMessage
-import com.ganesh.di.DaggerViewModelFactory
-import com.ganesh.weatherapp.WeatherApplication
-import com.ganesh.weatherapp.R
-import com.ganesh.weatherapp.databinding.ActivityMainBinding
+import com.ganesh.weatherapp.di.DaggerViewModelFactory
 import com.ganesh.weatherapp.binding.DataUtil
 import com.ganesh.weatherapp.binding.WeatherButtonCallback
 import com.ganesh.weatherapp.binding.WeatherData
+import com.ganesh.weatherapp.databinding.ActivityMainBinding
+import com.ganesh.weatherapp.view.BaseActivity
+import com.ganesh.weatherapp.view.VoiceInvoker
 import com.ganesh.weatherapp.view_model.WeatherViewModel
-import com.tamil.galassignment.data.model.CityWeatherModel
-import org.jetbrains.annotations.TestOnly
+import com.ganesh.weatherapp.data.model.CityWeatherModel
 import javax.inject.Inject
+
 
 class WeatherActivity : BaseActivity(), WeatherButtonCallback {
 
@@ -67,6 +66,8 @@ class WeatherActivity : BaseActivity(), WeatherButtonCallback {
         binding!!.dataUitll = utilData
 
         viewModelObserver()
+
+        //collectWeatherFromServer("Berlin")
 
     }
 
@@ -140,16 +141,18 @@ class WeatherActivity : BaseActivity(), WeatherButtonCallback {
     private fun viewModelObserver() {
 
         viewModel.weatherResponseLiveData.observe(this, Observer {
-            setErrorMessage()
-            setValueToViews(it)
+            setErorrMessage("")
+            setErrorMessageVisibilties(false)
+            setWeatherDataToViews(it)
         })
 
         viewModel.showLoadingLiveData.observe(this, androidx.lifecycle.Observer {
-
-            setProgressbar(it)
+            setProgressbarVisibilties(it)
         })
 
         viewModel.errorResponseLiveData.observe(this, androidx.lifecycle.Observer {
+
+            setErrorMessageVisibilties(true)
 
             if (!isNetworkConnected()) {
                 setErorrMessage(getString(R.string.internet_connection))
@@ -162,49 +165,52 @@ class WeatherActivity : BaseActivity(), WeatherButtonCallback {
 
     }
 
-
-    private fun setProgressbar(visibility: Boolean) {
-
+    /**
+     * setting progressbar visibilty
+     * @param visibility based on boolean values, progressbar is shown
+     */
+    private fun setProgressbarVisibilties(visibility: Boolean) {
         binding!!.dataUitll!!.canShowProgressBar = visibility
         binding!!.dataUitll = utilData
-
     }
 
+    /**
+     * showing error message
+     * @param message error message
+     */
     fun setErorrMessage(message: String) {
-
-        val modifiedMessage = ErrorMessage.getMessage(message)
-        binding!!.errorMessage = modifiedMessage
-        binding!!.dataUitll!!.errorTextVisibilty = true
-        setEmptyValues()
-
-    }
-
-    private fun setErrorMessage() {
-
-        binding!!.errorMessage = ""
-        binding!!.dataUitll!!.errorTextVisibilty = false
-
+        binding!!.errorMessage = message
+        resetWeatherDataViews()
     }
 
 
-    fun setValueToViews(cityWeatherData: CityWeatherModel) {
+    /**
+     * setting error messge views visibilty
+     * @param visibility based on boolean values, progressbar is shown
+     */
+    private fun setErrorMessageVisibilties(visibility: Boolean) {
+        binding!!.dataUitll!!.errorTextVisibilty = visibility
+        binding!!.dataUitll = utilData
+    }
 
+
+    /**
+     * show weather data to user
+     * @param cityWeatherData contains weather info
+     */
+    fun setWeatherDataToViews(cityWeatherData: CityWeatherModel) {
         weatherData!!.setValueToFields(cityWeatherData)
         binding!!.weatherinfo = weatherData
-
     }
 
 
-    private fun setEmptyValues() {
-
+    /**
+     * clear all data
+     */
+    private fun resetWeatherDataViews() {
         weatherData!!.setEmptyValues()
         binding!!.weatherinfo = weatherData
-
     }
 
-    @TestOnly
-    fun assg(viewModel:WeatherViewModel){
-        this.viewModel=viewModel
-    }
 
 }

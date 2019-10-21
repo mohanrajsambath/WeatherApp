@@ -1,6 +1,7 @@
-package com.ganesh.di
+package com.ganesh.weatherapp.di
 
 import androidx.lifecycle.ViewModelProvider
+import com.ganesh.weatherapp.di.DaggerViewModelFactory
 import dagger.Binds
 import dagger.Module
 

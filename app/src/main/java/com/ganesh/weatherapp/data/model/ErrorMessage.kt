@@ -1,4 +1,4 @@
-package com.ganesh.data.model
+package com.ganesh.weatherapp.data.model
 
 object ErrorMessage {
 

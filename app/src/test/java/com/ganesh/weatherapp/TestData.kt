@@ -1,6 +1,6 @@
-package com.ganesh.weatherapp.util
+package com.ganesh.weatherapp
 
-import com.tamil.galassignment.data.model.CityWeatherModel
+import com.ganesh.weatherapp.data.model.CityWeatherModel
 
 class TestData {
 

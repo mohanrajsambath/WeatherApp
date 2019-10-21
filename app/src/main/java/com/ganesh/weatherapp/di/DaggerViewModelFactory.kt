@@ -1,4 +1,4 @@
-package com.ganesh.di
+package com.ganesh.weatherapp.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

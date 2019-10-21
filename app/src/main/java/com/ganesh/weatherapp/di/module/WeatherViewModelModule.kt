@@ -1,8 +1,8 @@
-package com.ganesh.di.module
+package com.ganesh.weatherapp.di.module
 
 import androidx.lifecycle.ViewModel
 
-import com.ganesh.di.ViewModelKey
+import com.ganesh.weatherapp.di.ViewModelKey
 import com.ganesh.weatherapp.view_model.WeatherViewModel
 import dagger.Binds
 import dagger.Module
@@ -16,4 +16,7 @@ abstract class WeatherViewModelModule {
     @IntoMap
     @ViewModelKey(WeatherViewModel::class)
     abstract fun bindMyViewModel(myViewModel: WeatherViewModel): ViewModel
+
+
+
 }

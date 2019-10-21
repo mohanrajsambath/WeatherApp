@@ -2,7 +2,7 @@ package com.ganesh.weatherapp.binding
 
 import android.content.Context
 import com.ganesh.weatherapp.R
-import com.tamil.galassignment.data.model.CityWeatherModel
+import com.ganesh.weatherapp.data.model.CityWeatherModel
 
 
 class WeatherData constructor(private val context: Context) {
