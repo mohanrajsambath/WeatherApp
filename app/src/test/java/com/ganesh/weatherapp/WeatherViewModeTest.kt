@@ -92,7 +92,7 @@ class WeatherViewModeTest {
                 return super.scheduleDirect(run, 0, unit)
             }
 
-            override fun createWorker(): Worker {
+            override fun createWorker(): ExecutorScheduler.ExecutorWorker {
                 return ExecutorScheduler.ExecutorWorker(Executor { it.run() })
             }
         }
